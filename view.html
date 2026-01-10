@@ -45,6 +45,7 @@
 
     function initMap() {
       // Initialize the Map centered on Bucaramanga, Colombia
+      /** @type {google.maps.LatLng} */
       const bucaramanga = { lat: 7.11391, lng: -73.1198 };
 
       map = new google.maps.Map(document.getElementById("map"), {
@@ -60,7 +61,7 @@
       });
 
       // Set up Autocomplete on the input fields
-      setupAutocomplete();
+      setupAutocomplete(bucaramanga);
 
       // Optional: Recalculate if the user drags the route on the map
       directionsRenderer.addListener("directions_changed", () => {
@@ -74,9 +75,7 @@
       document.getElementById("route-finder").onclick = calculateAndDisplayRoute;
     }
 
-    function setupAutocomplete() {
-      // const originLabel = document.getElementById('origin-label');
-      // const destinationLabel = document.getElementById('destination-label');
+    function setupAutocomplete(location) {
       const box = document.getElementById("route-box");
 
       /* Set a locationBias */
@@ -88,17 +87,14 @@
       //   fields: ['place_id', 'geometry', 'name', 'formatted_address'],
       // };
 
-      state.inputs.origin = new google.maps.places.PlaceAutocompleteElement({
-        includedRegionCodes: ["co"]
-      });
-      state.inputs.destination = new google.maps.places.PlaceAutocompleteElement({
-        includedRegionCodes: ["co"]
-      });
+      const options = {
+        includedRegionCodes: ["co"],
+        locationBias: location,
+      };
 
-      // console.log(originInput);
+      state.inputs.origin = new google.maps.places.PlaceAutocompleteElement(options);
+      state.inputs.destination = new google.maps.places.PlaceAutocompleteElement(options);
 
-      // Connect a listener to the input fields to automatically calculate the route
-      // when a location is selected from the dropdown and the other field is filled.
       // originInput.addEventListener('place_changed', calculateAndDisplayRoute);
       // destInput.addEventListener('place_changed', calculateAndDisplayRoute);
 
@@ -109,8 +105,6 @@
     function calculateAndDisplayRoute() {
       const start = state.inputs.origin.Eg.value;
       const end = state.inputs.destination.Eg.value;
-      console.log(state.inputs.origin.Eg.value);
-
 
       // Only run if both fields have values
       if (!start || !end) {
@@ -118,16 +112,13 @@
       }
 
 
-      // Change button I
-
+      // Request the route
       const request = {
         origin: start,
         destination: end,
         travelMode: google.maps.TravelMode.DRIVING,
         unitSystem: google.maps.UnitSystem.METRIC, // Use kilometers
       };
-
-      console.log(request);
 
       directionsService.route(request, (response, status) => {
         if (status === 'OK') {
