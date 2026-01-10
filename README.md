@@ -1,6 +1,18 @@
 
 ## Procedure
 
+### Goals
+
+1. Clean the primary data
+2. Query information about each traverse
+3. Use the information + Google Maps
+
+### 1.  Clean the primary data
+
+### 2. Query information about each traverse
+
+### 3. Use the informatio + Google Maps
+
 * Search API for using the `autoComplete`
 
 Create the `autoComplete` instance: `https://developers.google.com/maps/documentation/javascript/reference/places-widget#PlaceAutocompleteElement`
@@ -23,6 +35,8 @@ Is possible to use the `Circle` (`https://developers.google.com/maps/documentati
 Updated information about all the transportation system: `https://www.datos.gov.co/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/about_data`
 
 Under `/data` all the data formats, scripts and raw information live.
+
+If confirmation and map illustration is needed: `https://www.amb.gov.co/rutas-publico-colectivo-complementario/#1690929061667-426b45df-5f88`
 
 ### Tutorials
 
