@@ -1,17 +1,39 @@
+# Maps Finder
 
-## Procedure
+A route finder working with Google Maps.
 
-### Goals
+## Goals
 
-1. Clean the primary data
+1. Clean the primary data (Currently at)
 2. Query information about each traverse
 3. Use the information + Google Maps
 
-### 1.  Clean the primary data
+### 1. Clean the primary data (Data mining)
 
-### 2. Query information about each traverse
+#### Buses' routes data
 
-### 3. Use the informatio + Google Maps
+Updated information about all the transportation system: `https://www.datos.gov.co/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/about_data`,
+and map illustration of each route if it is needed: `https://www.amb.gov.co/rutas-publico-colectivo-complementario/#1690929061667-426b45df-5f88`.
+
+To play rapidly with queries visit: `https://www.datos.gov.co/en/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/explore/query`, base encoded component: `SELECT%0A%20%20%60codigo%60%2C%0A%20%20%60ruta%60%2C%0A%20%20%60terminal%60%2C%0A%20%20%60empresa%60%2C%0A%20%20%60cartel_de_ruta_ida%60%2C%0A%20%20%60recorrido%60%2C%0A%20%20%60capacidad_minima%60%2C%0A%20%20%60capacidad_maxima%60%2C%0A%20%20%60frecuencia_de_despacho_hora_pico%60%2C%0A%20%20%60hora_primer_despacho%60%2C%0A%20%20%60hora_ultimo_despacho%60%2C%0A%20%20%60long_km%60%2C%0A%20%20%60servicio%60%2C%0A%20%20%60clase%60%2C%0A%20%20%60cartel_de_ruta_regreso%60%2C%0A%20%20%60frecuencia_despacho_hora_valle%60/page/filter`
+
+All retreived data and scripts is being saved under `/data` and `NOTES.md` is there to find any clarification.
+
+#### Buses routes description patterns
+
+Properties that are key to build a data structure that can help.
+
+* They are circular, meaning that they end exactly at where they started.
+* Each street or avenue is separated with a hyphen '-'
+* Sometimes is possible to see a '- -', meaning that a place was deleted or it was a mistake from who wrote them.
+
+* The values were human made (noticeably)
+
+### 2. Query information about each route
+
+Once the data is cleaned and easy to traverse, how we enquire it?
+
+### 3. Use the information + Google Maps
 
 * Search API for using the `autoComplete`
 
@@ -29,14 +51,6 @@ Use the next object to configure the instance:
 We use `LatLng`(`https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLng`) to configure the `AutocompleteElement.locationBias`.
 
 Is possible to use the `Circle` (`https://developers.google.com/maps/documentation/javascript/reference/polygon?hl=es-419#CircleOptions`)
-
-## Buses information
-
-Updated information about all the transportation system: `https://www.datos.gov.co/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/about_data`
-
-Under `/data` all the data formats, scripts and raw information live.
-
-If confirmation and map illustration is needed: `https://www.amb.gov.co/rutas-publico-colectivo-complementario/#1690929061667-426b45df-5f88`
 
 ### Tutorials
 
