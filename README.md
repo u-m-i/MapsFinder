@@ -39,8 +39,7 @@ Every map has an iframe like this:
 <iframe loading="lazy" src="https://www.google.com/maps/d/u/1/embed?mid=11vUH9m9HZ6fknyUKUoz11QaS_BvaRRo&amp;ehbc=2E312F" width="800" height="480"><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start">﻿</span></iframe>
 ```
 
-Every map is under the `<div class="wpb_text_column wpb_content_element">` node parent and at the same all the map parents have a container `<div class="vc_tta-panels-container">`.
-
+Every map is under the `<div class="wpb_text_column wpb_content_element">` node parent, but the parent of the 'component', is `<div class="vc_tta-panel vc_active>"` and at the same all the map parents have a container `<div class="vc_tta-panels-container">`.
 
 ### 2. Query information about each route
 
