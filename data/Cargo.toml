@@ -1,0 +1,13 @@
+[package]
+name = "cli_query"
+version = "0.1.0"
+
+[dependencies]
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+jmespath = "0.5.0"
+
+
+[[bin]]
+name = "cli"
+path = "query.rs"

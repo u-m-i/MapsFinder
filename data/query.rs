@@ -1,5 +1,7 @@
-extren crate jmespath;
-
+extern crate jmespath;
+use serde_json::{Value, from_reader};
+use std::fs::{File};
+use std::io::{copy, stdout};
 
 fn enquire(expression: jmespath::Expression, target: Serde ) -> jmespath::Result {
   let own = expression.unwrap();
@@ -8,11 +10,12 @@ fn enquire(expression: jmespath::Expression, target: Serde ) -> jmespath::Result
 }
 
 fn main() {
-  /** Buses available hours */
+  /* Read the JSON */
 
-  /** Buses routes card */
+  let reader: File = File::open(args[1]).unwrap(); 
 
-  /** Buses routes traverse */
+  let json_data: Value = serde_json::from_reader(reader).unwrap();
+
 }
 
 
