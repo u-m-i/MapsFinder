@@ -1,6 +1,6 @@
 # Maps Finder
 
-A route finder working with Google Maps.
+The problem is next: Given two coordinates, an origin an destine, _within a valid search area_, what is the best buse route you can take?
 
 ## Goals
 
@@ -8,14 +8,22 @@ A route finder working with Google Maps.
 2. Query information about each traverse
 3. Use the information + Google Maps
 
-### 1. Clean the primary data (Data mining)
+## 1. Clean the primary data (Data mining)
 
 #### Buses' routes data
 
-Updated information about all the transportation system: `https://www.datos.gov.co/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/about_data`,
-and map illustration of each route if it is needed: `https://www.amb.gov.co/rutas-publico-colectivo-complementario/#1690929061667-426b45df-5f88`.
+##### Essential Sources
 
-To play rapidly with queries visit: `https://www.datos.gov.co/en/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/explore/query`, base encoded component: `SELECT%0A%20%20%60codigo%60%2C%0A%20%20%60ruta%60%2C%0A%20%20%60terminal%60%2C%0A%20%20%60empresa%60%2C%0A%20%20%60cartel_de_ruta_ida%60%2C%0A%20%20%60recorrido%60%2C%0A%20%20%60capacidad_minima%60%2C%0A%20%20%60capacidad_maxima%60%2C%0A%20%20%60frecuencia_de_despacho_hora_pico%60%2C%0A%20%20%60hora_primer_despacho%60%2C%0A%20%20%60hora_ultimo_despacho%60%2C%0A%20%20%60long_km%60%2C%0A%20%20%60servicio%60%2C%0A%20%20%60clase%60%2C%0A%20%20%60cartel_de_ruta_regreso%60%2C%0A%20%20%60frecuencia_despacho_hora_valle%60/page/filter`
+**Updated information**: `https://www.datos.gov.co/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/about_data`
+  Summary about each route divided in a matrix
+
+**Main Source for Dataviz and Application**: `https://www.amb.gov.co/rutas-publico-colectivo-complementario/#1690929061667-426b45df-5f88`
+  The application provided by the local goverment for the buses' routes
+
+**Rapid Queries**: `https://www.datos.gov.co/en/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/explore/query`
+  Already a filter we can use with the endpoint (On SoQL): `SELECT%0A%20%20%60codigo%60%2C%0A%20%20%60ruta%60%2C%0A%20%20%60terminal%60%2C%0A%20%20%60empresa%60%2C%0A%20%20%60cartel_de_ruta_ida%60%2C%0A%20%20%60recorrido%60%2C%0A%20%20%60capacidad_minima%60%2C%0A%20%20%60capacidad_maxima%60%2C%0A%20%20%60frecuencia_de_despacho_hora_pico%60%2C%0A%20%20%60hora_primer_despacho%60%2C%0A%20%20%60hora_ultimo_despacho%60%2C%0A%20%20%60long_km%60%2C%0A%20%20%60servicio%60%2C%0A%20%20%60clase%60%2C%0A%20%20%60cartel_de_ruta_regreso%60%2C%0A%20%20%60frecuencia_despacho_hora_valle%60/page/filter`
+
+> To see more about Socrates we can use the documentation: `https://dev.socrata.com/consumers/getting-started.html`
 
 All retreived data and scripts is being saved under `/data` and `NOTES.md` is there to find any clarification.
 
@@ -46,6 +54,22 @@ Every map is under the `<div class="wpb_text_column wpb_content_element">` node 
 Once the data is cleaned and easy to traverse, how we enquire it?
 
 ### 3. Use the information + Google Maps
+
+#### Encoding and Decoding Routes
+
+> Given a coordinate, _within a valid search area_, what is the best buse route you can take?
+
+If the input are coordinates, it is better to use symbolic location or exact coordinates?
+
+Proximity is better computed by numbers, _but_ searching, can be easier with symbols.
+So the algorithm can first filter by proximity and then filter by sequence.
+The best sequence wins and the leader board goes up to n routes.
+
+**Let's use the Geocoding API of Google**
+
+`https://developers.google.com/maps/documentation/geocoding?hl=es-419`
+
+#### Cool Features
 
 * Search API for using the `autoComplete`
 

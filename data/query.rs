@@ -1,23 +1,47 @@
 extern crate jmespath;
+extern crate serde_json;
+
 use serde_json::{Value, from_reader};
+use std::env::args;
+use std::io::BufReader;
 use std::fs::{File};
-use std::io::{copy, stdout};
 
-fn enquire(expression: jmespath::Expression, target: Serde ) -> jmespath::Result {
-  let own = expression.unwrap();
-
-  return own.search(target);
+fn enquire(expression: jmespath::Expression, target: Value ) -> jmespath::SearchResult {
+  return Ok(expression.search(target).unwrap())
 }
+
+// fn geocoding() {}
+
+const FILTER: &str = ".[?code == '3']";
 
 fn main() {
   /* Read the JSON */
 
-  let reader: File = File::open(args[1]).unwrap(); 
+  let input = args().collect::<Vec<String>>();
 
-  let json_data: Value = serde_json::from_reader(reader).unwrap();
+  if input.len() < 2 {
+    println!("No file provided!");
+    ()
+  }
 
+  let file: File = File::open(input[1].clone()).unwrap(); 
+
+  let reader = BufReader::new(file);
+
+  let json_data: Value = from_reader(reader).unwrap();
+
+  let expression = jmespath::compile(FILTER).unwrap();
+
+  let result = enquire(expression, json_data).unwrap();
+
+  // ** Split
+  // ** Traverse - Encode
+  // ** Test distance diff
+
+  println!("{:?}", result);
+
+  ()
 }
-
 
 /* 
 JMESPath Repository: https://github.com/jmespath/jmespath.rs
