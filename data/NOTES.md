@@ -46,7 +46,6 @@ Documentation: `https://support.socrata.com/hc/en-us/articles/115005364207-Acces
 
 Base encoded component: `SELECT%0A%20%20%60codigo%60%2C%0A%20%20%60ruta%60%2C%0A%20%20%60terminal%60%2C%0A%20%20%60empresa%60%2C%0A%20%20%60cartel_de_ruta_ida%60%2C%0A%20%20%60recorrido%60%2C%0A%20%20%60capacidad_minima%60%2C%0A%20%20%60capacidad_maxima%60%2C%0A%20%20%60frecuencia_de_despacho_hora_pico%60%2C%0A%20%20%60hora_primer_despacho%60%2C%0A%20%20%60hora_ultimo_despacho%60%2C%0A%20%20%60long_km%60%2C%0A%20%20%60servicio%60%2C%0A%20%20%60clase%60%2C%0A%20%20%60cartel_de_ruta_regreso%60%2C%0A%20%20%60frecuencia_despacho_hora_valle%60/page/filter`
 
-
 ### Enquiries
 
   * *Buses available hours*

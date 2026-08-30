@@ -12,7 +12,7 @@ fn enquire(expression: jmespath::Expression, target: Value ) -> jmespath::Search
 
 // fn geocoding() {}
 
-const FILTER: &str = ".[?code == '3']";
+const FILTER: &str = "[0].recorrido";
 
 fn main() {
   /* Read the JSON */
@@ -34,11 +34,15 @@ fn main() {
 
   let result = enquire(expression, json_data).unwrap();
 
+  let mut splitted: Vec<&str> = result.as_string().unwrap().rsplit('-').collect();
+
+  splitted.reverse();
+
   // ** Split
   // ** Traverse - Encode
   // ** Test distance diff
 
-  println!("{:?}", result);
+  println!("{:?}", splitted);
 
   ()
 }
