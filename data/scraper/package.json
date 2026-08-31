@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^17.2.3",
     "puppeteer": "^24.36.0",
+    "scrapper": "link:",
     "w3c-xmlserializer": "^5.0.0"
   }
 }

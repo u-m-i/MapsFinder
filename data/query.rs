@@ -1,18 +1,18 @@
 extern crate jmespath;
 extern crate serde_json;
+extern crate serde;
 
+use serde::{Serialize, Deserialize};
 use serde_json::{Value, from_reader};
 use std::env::args;
 use std::io::BufReader;
 use std::fs::{File};
 
-fn enquire(expression: jmespath::Expression, target: Value ) -> jmespath::SearchResult {
-  return Ok(expression.search(target).unwrap())
+#[derive(Serialize, Deserialize)]
+struct FrequentQuery {
+  recorrido: Vec<String>,
+  terminal: String
 }
-
-// fn geocoding() {}
-
-const FILTER: &str = "[0].recorrido";
 
 fn main() {
   /* Read the JSON */
@@ -28,15 +28,16 @@ fn main() {
 
   let reader = BufReader::new(file);
 
-  let json_data: Value = from_reader(reader).unwrap();
-
-  let expression = jmespath::compile(FILTER).unwrap();
-
-  let result = enquire(expression, json_data).unwrap();
+  let json_data: FrequentQuery = from_reader(reader).unwrap();
 
   let mut splitted: Vec<&str> = result.as_string().unwrap().rsplit('-').collect();
 
   splitted.reverse();
+
+
+  // ** Sort by
+    // - empresa
+    // - terminal
 
   // ** Split
   // ** Traverse - Encode

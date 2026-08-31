@@ -2,6 +2,8 @@
 import fs from "fs/promises";
 import puppeteer from "puppeteer";
 
+const TARGET = `https://www.amb.gov.co/rutas-publico-colectivo-complementario/`;
+
 const browser = await puppeteer.launch({ headless: "new" });
 const page = await browser.newPage();
 
@@ -11,7 +13,13 @@ const queries = {
   mapsIds: [],
 };
 
-await page.goto(process.env.MAPS_URL);
+const folderName = new Date(Date.now()).toLocaleString("es-CO").split(',')[0].replaceAll('/', '-');
+
+await fs.mkdir(`../json/${folderName}`);
+
+const path = (fileName) => `../json/${folderName}/${fileName}`;
+
+await page.goto(TARGET);
 
 /** More about at `https://pptr.dev/guides/page-interactions#locators` */
 
@@ -21,24 +29,22 @@ const mapsContainer = await page.$eval(queries.mapsContainer, (node) => {
   return node.innerHTML;
 });
 
-// console.debug(mapsContainer);
 
-
-await fs.writeFile("../json/maps.html", mapsContainer, (error) => {
+await fs.writeFile(path("maps.xml"), mapsContainer, (error) => {
   if (error) {
     console.log("Error writing the XML file");
   }
 });
 
-const ids = await page.$$eval(queries.mapsClass, (nodes) =>
-  nodes.map((node) => node.id),
+const maps = await page.$$eval(queries.mapsClass, (nodes) =>
+  nodes.map((node) => ({nodeId: node.id})),
 );
 
-queries.mapsIds = ids;
+queries.maps = maps;
 
 await fs.writeFile(
-  "../json/scrap-targets.json",
-  JSON.stringify(queries),
+  path("scrap-targets.json"),
+  JSON.stringify(queries, null, 2),
   (error) => {},
 );
 

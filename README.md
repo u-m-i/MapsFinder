@@ -10,9 +10,9 @@ The problem is next: Given two coordinates, an origin an destine, _within a vali
 
 ## 1. Clean the primary data (Data mining)
 
-#### Buses' routes data
+### Buses' routes data
 
-##### Essential Sources
+#### Essential Sources
 
 **Updated information**: `https://www.datos.gov.co/Transporte/8-RUTAS-TRANSPORTE-URBANO/kcdt-jbvj/about_data`
   Summary about each route divided in a matrix
@@ -39,7 +39,9 @@ Properties that are key to build a data structure that can help.
 
 #### Scrapy the buses routes
 
-There is a public page ``, that allows to see the route drew on the map, with this as guide is possible to contrast the result of the search algorithm and the 'official route'
+_target_:`https://www.amb.gov.co/rutas-publico-colectivo-complementario/`,
+
+It allows to see the route drew on the map, with this as guide is possible to contrast the result of the search algorithm and the 'official route'
 
 Every map has an iframe like this:
 
@@ -68,6 +70,69 @@ The best sequence wins and the leader board goes up to n routes.
 **Let's use the Geocoding API of Google**
 
 `https://developers.google.com/maps/documentation/geocoding?hl=es-419`
+
+This is the structure we aim to use as our map of the bus' route:
+
+```JSON
+
+{
+  "recorrido": "BUENAVISTA - VIA PAMPLONA BUCARAMANGA - MORRORICO - CARRERA 50 – ALBANIA - ALVAREZ - CALLE 34 - CARRERA 33 - VIADUCTO LA FLORA - CC CACIQUE - DIAMANTE - CARRERA 24 - AVENIDA 89 -ISAN LUIS) - CARRERA 19 - PUENTE FONTANA - CARRERA 22ª - CALLE 100 - CALLE 103 - CARRERA 23 - CALLE 111 - CARRERA 21B - CALLE 117 (COMULTRANSAN) - BARRIO CRISTAL BAJO - RETORNA - CALLE 117 - CARRERA 22 – CALLE 100 - DIAGONAL 20 - CALLE 99 - PUENTE DE FONTANA - CARRERA 19 -CALLE 89 – CARRERA 24 - INTERCAMBIADOR GARCÍA CADENA - CARRERA 29 - CALLE 93 - PUENTE LA PEDREGOSA - CENTRO COMERCIAL CACIQUE - PUENTE LA FLORA - CARRERA 33 - CARRERA 33 A MEGAMALL - PARQUE DEL AGUA - MORRORICO - BUENAVISTA"
+}
+
+```
+
+First split the string by '-', and produce:
+
+```Rust
+[""]
+```
+
+Clean the values with further more filters, mapping unvalid symbols to valid symbols
+
+
+The final output:
+
+```Rust
+[""]
+```
+
+Using the routes and what every symbol represents:
+
+```json
+{
+  "Calle" : "Cl.",
+  "Carrera": "Cra.",
+  "Union": "&",
+}
+```
+Places and their usual usage:
+
+```json
+{
+  "placesPrefixes": [
+    "puente",
+    "centro comercial",
+    "cc",
+    "viaducto",
+    "barrio",
+    "parque",
+  ],
+  "streetTypes": [
+    "via",
+    "carrera",
+    "calle",
+  ]
+}
+```
+
+This format will give valid outputs:
+
+```bash
+curl -H 'X-Goog-Api-Key: <API-KEY>' \
+'https://geocode.googleapis.com/v4/geocode/address/Cl.+32+%26+Cra.+47,+Bucaramanga,+Santander'
+```
+
+will give us a very looong JSON, but we need that `"granularity"` gets equals to `"GEOMETRIC_CENTRE"`
 
 #### Cool Features
 
