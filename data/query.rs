@@ -3,12 +3,12 @@ extern crate serde_json;
 extern crate serde;
 
 use serde::{Serialize, Deserialize};
-use serde_json::{Value, from_reader};
+use serde_json::{from_reader};
 use std::env::args;
 use std::io::BufReader;
 use std::fs::{File};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct FrequentQuery {
   recorrido: Vec<String>,
   terminal: String
@@ -28,11 +28,14 @@ fn main() {
 
   let reader = BufReader::new(file);
 
-  let json_data: FrequentQuery = from_reader(reader).unwrap();
+  let json_data: Vec<FrequentQuery> = from_reader(reader).unwrap();
 
-  let mut splitted: Vec<&str> = result.as_string().unwrap().rsplit('-').collect();
+  println!("{:?}", json_data[0]);
 
-  splitted.reverse();
+
+  // let mut splitted: Vec<&str> = json_data.as_string().unwrap().rsplit('-').collect();
+
+  // splitted.reverse();
 
 
   // ** Sort by
@@ -43,7 +46,7 @@ fn main() {
   // ** Traverse - Encode
   // ** Test distance diff
 
-  println!("{:?}", splitted);
+  // println!("{:?}", splitted);
 
   ()
 }

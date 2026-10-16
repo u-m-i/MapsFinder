@@ -35,7 +35,8 @@ Properties that are key to build a data structure that can help.
 * Each street or avenue is separated with a hyphen '-'
 * Sometimes is possible to see a '- -', meaning that a place was deleted or it was a mistake from who wrote them.
 
-* The values were human made (noticeably)
+* The values were human made (noticeably) so they may contain typos, therefore a totally damage piece in the information.
+
 
 #### Scrapy the buses routes
 
@@ -51,11 +52,42 @@ Every map has an iframe like this:
 
 Every map is under the `<div class="wpb_text_column wpb_content_element">` node parent, but the parent of the 'component', is `<div class="vc_tta-panel vc_active>"` and at the same all the map parents have a container `<div class="vc_tta-panels-container">`.
 
-### 2. Query information about each route
+
+#### ETL
+
+**Our** Base plan this time will have as schema:
+
+*Extract*: from the available sources, by a method, e.g, by processing routes that share a property.
+
+*Transform*: clean the data into a _well-formed_ structure for another stage of development.
+
+*Load*: save on massive storage, on GitHub or S3 instances.
+
+
+#### Executing the ETL
+
+
+- Extract textual routes and maps from sources and store them somewhere near. (folder `json/db`)
+  * All the buses data is holded into `fullDump.json`
+
+- Scrap the Google Maps' drawing URI and process them to extract the coordinates
+
+- With all the routes stored in an available `json` process them:
+  - Using known patterns
+  - Outputting routes to an arbitrary structure
+
+- With all the Google Maps drawings
+ - Using the coordinates of the drawing
+ - Storing those coordinates with the previous transformed route
+ - 
+
+
+
+## 2. Query information about each route
 
 Once the data is cleaned and easy to traverse, how we enquire it?
 
-### 3. Use the information + Google Maps
+## 3. Use the information + Google Maps
 
 #### Encoding and Decoding Routes
 

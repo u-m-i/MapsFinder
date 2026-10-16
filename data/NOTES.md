@@ -1,4 +1,8 @@
 
+### Why this stack?
+
+Because I like Rust and I want to exercise it the most, and this is a good opportunity to do so. Even if it is a bit _dumb_.
+Refer, for instance, to this lovely [answer](https://users.rust-lang.org/t/rust-in-data-science-issue/97169/2).
 
 ### Under the json Folder
 
