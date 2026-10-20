@@ -7,7 +7,7 @@ Refer, for instance, to this lovely [answer](https://users.rust-lang.org/t/rust-
 ### Under the json Folder
 
 *buses.json*: describe the properties of each bus and its route. state: dirty.
-taken from: `https://www.datos.gov.co/resource/kcdt-jbvj.json`. also can be taken at: `https://www.datos.gov.co/api/odata/v4/kcdt-jbvj` comment: use GET without any Auth header to get the JSON.
+taken from: `https://www.datos.gov.co/resource/kcdt-jbvj.json`. also can be taken at: `https://www.datos.gov.co/api/odata/v4/kcdt-jbvj` comment: use `GET` without any Auth header to get the JSON.
 
 
 *carrera-33.json*: buses that have this avenue included on its route. state: dirty.

@@ -166,6 +166,17 @@ curl -H 'X-Goog-Api-Key: <API-KEY>' \
 
 will give us a very looong JSON, but we need that `"granularity"` gets equals to `"GEOMETRIC_CENTRE"`
 
+
+### How to contrast vectors with vectors
+
+Various points to bear in mind:
+
+* How will the input of the user be?
+  - A location from a phone?
+  - A direction?
+
+* How will the algorithm compute these vectors?
+
 #### Cool Features
 
 * Search API for using the `autoComplete`
